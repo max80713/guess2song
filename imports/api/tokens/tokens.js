@@ -1,4 +1,4 @@
-// Definition of the links collection
+// Definition of the tokens collection
 
 import { Mongo } from 'meteor/mongo';
 
