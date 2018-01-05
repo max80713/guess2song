@@ -1,0 +1,14 @@
+{
+  "name": "guess2song",
+  "private": true,
+  "scripts": {
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "@kkbox/kkbox-js-sdk": "^1.2.1",
+    "async": "^2.6.0",
+    "babel-runtime": "^6.26.0",
+    "bcrypt": "^1.0.3",
+    "meteor-node-stubs": "^0.3.2"
+  }
+}
