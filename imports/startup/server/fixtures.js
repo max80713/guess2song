@@ -2,16 +2,17 @@ import { Meteor } from 'meteor/meteor';
 
 import async from 'async';
 import moment from 'moment';
-import { Auth, Api}  from '@kkbox/kkbox-js-sdk';
+import { Auth, Api } from '@kkbox/kkbox-js-sdk';
 
 import { Tokens } from '../../api/tokens/tokens.js';
 import { Tracks } from '../../api/tracks/tracks.js';
 
+const { KKBOX_API_CLIENT_ID: clienId, KKBOX_API_CLIENT_SECRET: clientSecret } = process.env;
+const auth = new Auth(clienId, clientSecret);
 const getNewToken = () => new Promise((resolve, reject) => {
-  const auth = new Auth('20a510010adc77366c0ac1567db4c770', '96d9067cfb629786b73df6f783ccce5c');
   auth.clientCredentialsFlow.fetchAccessToken().then((response) => {
+    // TODO: Handle NON-200 response
     const token = response.data;
-    console.log(token);
     token.expires_in = token.expires_in * 1000;
     token.expires_at = new Date().getTime() + token.expires_in * 1000;
     resolve(token);
@@ -24,7 +25,6 @@ Meteor.startup(() => {
     if (!token || new Date() > token.expires_at ) {
       console.log(new Date(), 'updating token...');
       getNewToken().then((newToken) => {
-        console.log(newToke);
         Tokens.upsert({}, newToken, (error, result) => {
           if (error) {
             next(error);
@@ -40,7 +40,7 @@ Meteor.startup(() => {
   let first = true;
   async.forever((next) => {
     Meteor.setTimeout(next, moment().endOf('day') - moment());
-    if (first) {
+    if (first && Tracks.find().count() > 0) {
       first = false;
       return;
     };
