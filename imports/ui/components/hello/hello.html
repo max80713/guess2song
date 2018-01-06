@@ -1,7 +1,21 @@
 <template name="hello">
-  <button>Click Me</button>
-  <div class="track"></div>
-  {{#each options}}
-    <button>{{album.artist.name}}</button>
-  {{/each}}
+  <div class="hello">
+    {{#unless games}}
+      <button class="ui primary basic button start">開始跳戰！</button>
+      <div>{{score}}</div>
+    {{/unless}}
+    <div class="track">
+      <div class="mask"></div>
+    </div>
+    {{#if options}}
+    <div class="ui vertical basic buttons">
+      <div class="ui top attached progress">
+        <div class="bar"></div>
+      </div>
+      {{#each options}}
+        <button class="ui button option">{{name}}</button>
+      {{/each}}
+    </div>
+    {{/if}}
+  </div>
 </template>

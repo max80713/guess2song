@@ -2,34 +2,70 @@ import './hello.html';
 import { Random } from 'meteor/random';
 
 Template.hello.onCreated(function helloOnCreated() {
-  // counter starts at 0
-  this.counter = new ReactiveVar(0);
   this.options = new ReactiveVar();
+  this.games = new ReactiveVar(0);
+  this.score = new ReactiveVar(0);
+});
+
+Template.hello.onRendered(function helloOnRendered() {
+  this.autorun(() => {
+    this.percent = 0;
+    Meteor.clearInterval(this.progrss);
+    Meteor.clearTimeout(this.countDown);
+    
+    const games = this.games.get();
+    if (games > 5) {
+      this.games.set(0);
+      this.options.set();
+      if (this.find('iframe')) this.find('.track').removeChild(this.find('iframe'));
+      return;
+    }
+    if (games > 0) {
+      Meteor.call('createGame', (error, result) => {
+        this.options.set(result);
+        const track = Random.choice(result);
+        const trackId = track.id;
+        this.trackId = trackId;
+        if (this.find('iframe')) this.find('.track').removeChild(this.find('iframe'));
+        var iframe = document.createElement('iframe');
+        iframe.src = `https://widget.kkbox.com/v1/?id=${trackId}&type=song&terr=JP&lang=JA&autoplay=true`;
+        this.find('.track').prepend(iframe);
+        
+        this.progrss = Meteor.setInterval(() => {
+          this.percent += 1 / 30;
+          this.$('.progress').progress('set percent', this.percent);
+        }, 10);
+        
+        this.countDown = Meteor.setTimeout(() => {
+          this.games.set(this.games.get() + 1);
+        }, 30000);
+      });
+    }
+  });
 });
 
 Template.hello.helpers({
-  counter() {
-    return Template.instance().counter.get();
-  },
   options() {
     return Template.instance().options.get();
-  }
+  },
+  games() {
+    return Template.instance().games.get();
+  },
+  score() {
+    return Math.round(Template.instance().score.get());
+  },
 });
 
 Template.hello.events({
-  'click button'(event, instance) {
-    // increment the counter when button is clicked
-    instance.counter.set(instance.counter.get() + 1);
-    Meteor.call('createGame', (error, result) => {
-      instance.options.set(result);
-      const track = Random.choice(result);
-      const trackId = track.id;
-      console.log(track);
-      if (instance.find('iframe')) instance.find('.track').removeChild(instance.find('iframe'));
-      var iframe = document.createElement('iframe');
-      // iframe.style.display = "none";
-      iframe.src = `https://widget.kkbox.com/v1/?id=${trackId}&type=song&terr=JP&lang=JA&autoplay=true`;
-      instance.find('.track').append(iframe);
-    });
+  'click button.start'(event, instance) {
+    instance.score.set(0);
+    instance.games.set(instance.games.get() + 1);
+  },
+  'click button.option'(event, instance) {
+    if (this.id === instance.trackId) {
+      instance.score.set(instance.score.get() + 3 * (100 - instance.percent));
+      instance.games.set(instance.games.get() + 1);
+    }
+    else instance.$(event.currentTarget).addClass('disabled');
   },
 });
