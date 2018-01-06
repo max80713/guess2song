@@ -23,7 +23,7 @@ Meteor.startup(() => {
     if (!token || new Date() > token.expires_at ) {
       console.log(new Date(), 'updating token...');
       getNewToken().then((newToken) => {
-        Tokens.upsert({}. newToken, (error, result) => {
+        Tokens.upsert({}, newToken, (error, result) => {
           if (error) {
             next(error);
             return;
