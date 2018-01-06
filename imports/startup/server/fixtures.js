@@ -11,6 +11,7 @@ const getNewToken = () => new Promise((resolve, reject) => {
   const auth = new Auth('20a510010adc77366c0ac1567db4c770', '96d9067cfb629786b73df6f783ccce5c');
   auth.clientCredentialsFlow.fetchAccessToken().then((response) => {
     const token = response.data;
+    console.log(token);
     token.expires_in = token.expires_in * 1000;
     token.expires_at = new Date().getTime() + token.expires_in * 1000;
     resolve(token);
@@ -23,6 +24,7 @@ Meteor.startup(() => {
     if (!token || new Date() > token.expires_at ) {
       console.log(new Date(), 'updating token...');
       getNewToken().then((newToken) => {
+        console.log(newToke);
         Tokens.upsert({}, newToken, (error, result) => {
           if (error) {
             next(error);
