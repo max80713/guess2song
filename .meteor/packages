@@ -27,3 +27,6 @@ johanbrook:publication-collector  # Test a Meteor publication by collecting its 
 accounts-ui
 accounts-password
 http
+aldeed:simple-schema
+aldeed:collection2
+meteorhacks:aggregate
