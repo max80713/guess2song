@@ -1,5 +1,8 @@
 <template name="hello">
   {{> loginButtons}}
   <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+  <div class="track"></div>
+  {{#each options}}
+    <button>{{album.artist.name}}</button>
+  {{/each}}
 </template>
