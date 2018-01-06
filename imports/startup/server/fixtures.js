@@ -1,13 +1,11 @@
-// Fill the DB with example data on startup
-
 import { Meteor } from 'meteor/meteor';
-import { HTTP } from 'meteor/http';
-import { Links } from '../../api/links/links.js';
-import { Tokens } from '../../api/tokens/tokens.js';
-import { Tracks } from '../../api/tracks/tracks.js';
-import { Auth, Api}  from '@kkbox/kkbox-js-sdk';
+
 import async from 'async';
 import moment from 'moment';
+import { Auth, Api}  from '@kkbox/kkbox-js-sdk';
+
+import { Tokens } from '../../api/tokens/tokens.js';
+import { Tracks } from '../../api/tracks/tracks.js';
 
 const getNewToken = () => new Promise((resolve, reject) => {
   const auth = new Auth('20a510010adc77366c0ac1567db4c770', '96d9067cfb629786b73df6f783ccce5c');
@@ -49,7 +47,7 @@ Meteor.startup(() => {
     const api = new Api(accessToken);
     api.chartFetcher.setPlaylistID('0kTVCy_kzou3AdOsAc').fetchTracks().then((response) => {
       const tracks = response.data.data;
-      Tracks.remove({});
+      Tracks.remove({});  
       async.each(tracks, (track, callback) => Tracks.insert(track, callback), (error) => {
         if (error) {
           next(error);
