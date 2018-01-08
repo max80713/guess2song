@@ -5,9 +5,13 @@ Template.hello.onCreated(function helloOnCreated() {
   this.options = new ReactiveVar();
   this.games = new ReactiveVar(0);
   this.score = new ReactiveVar(0);
+  this.playlists = new ReactiveVar([]);
 });
 
 Template.hello.onRendered(function helloOnRendered() {
+  Meteor.call('getPlaylists', (error, result) => {
+    this.playlists.set(result);
+  })
   this.autorun(() => {
     this.percent = 0;
     Meteor.clearInterval(this.progrss);
@@ -53,6 +57,9 @@ Template.hello.helpers({
   },
   score() {
     return Math.round(Template.instance().score.get());
+  },
+  playlists() {
+    return Template.instance().playlists.get();
   },
 });
 

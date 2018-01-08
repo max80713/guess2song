@@ -1,6 +1,26 @@
 <template name="hello">
   <div class="hello">
-    {{#unless games}}
+    <div class="ui stackable doubling four column grid">
+      {{#each playlists}}
+      <div class="column">
+        <div class="ui fluid card">
+          <div class="image">
+            <img src="{{images.[0].url}}">
+          </div>
+          <div class="content">
+            <div class="header">{{Title}}</div>
+            <div class="meta"></div>
+            <div class="description">{{description}}</div>
+          </div>
+          <div class="extra content">
+            <span class="right floated"></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    <!-- {{#unless games}}
       <button class="ui primary basic button start">開始跳戰！</button>
       <div>{{score}}</div>
     {{/unless}}
@@ -16,6 +36,6 @@
         <button class="ui button option">{{name}}</button>
       {{/each}}
     </div>
-    {{/if}}
+    {{/if}} -->
   </div>
 </template>
