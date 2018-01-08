@@ -4,6 +4,7 @@ import async from 'async';
 import moment from 'moment';
 import { Auth, Api } from '@kkbox/kkbox-js-sdk';
 
+import { Playlists } from '../../api/playlists/playlists.js';
 import { Tokens } from '../../api/tokens/tokens.js';
 import { Tracks } from '../../api/tracks/tracks.js';
 
@@ -40,21 +41,39 @@ Meteor.startup(() => {
   let first = true;
   async.forever((next) => {
     Meteor.setTimeout(next, moment().endOf('day') - moment());
-    if (first && Tracks.find().count() > 0) {
+    if (first && Playlists.find().count() > 0) {
       first = false;
       return;
     };
-    console.log(new Date(), 'updating tracks...');
+    console.log(new Date(), 'updating playlists & tracks...');
     const accessToken = Tokens.findOne().access_token;
     const api = new Api(accessToken);
-    api.chartFetcher.setPlaylistID('0kTVCy_kzou3AdOsAc').fetchTracks().then((response) => {
-      const tracks = response.data.data;
-      Tracks.remove({});  
-      async.each(tracks, (track, callback) => Tracks.insert(track, callback), (error) => {
+    api.chartFetcher.fetchCharts().then((response) => {
+      const playlists = response.data.data;
+      Playlists.remove({});
+      async.each(playlists, (playlist, callback) => Playlists.insert(playlist, callback), (error) => {
         if (error) {
           next(error);
           return;
         }
+        async.each(playlists, (playlist, callback) => {
+          api.chartFetcher.setPlaylistID(playlist.id).fetchTracks().then((response) => {
+            Tracks.remove({});  
+            const tracks = response.data.data;
+            tracks.playlist_id = playlist.id;
+            async.each(tracks, (track, callback) => Tracks.insert(track, callback), (error) => {
+              if (error) {
+                next(error);
+                return;
+              }
+            });
+          }).catch(next);
+        }, (error) => {
+          if (error) {
+            next(error);
+            return;
+          }
+        });
       });
     }).catch(next);
   }, console.log);
