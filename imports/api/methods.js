@@ -1,10 +1,16 @@
 import { Meteor } from 'meteor/meteor';
-import { Tracks } from './tracks/tracks.js';
+
 import { Games } from './games/games.js';
+import { Playlists } from './playlists/playlists.js';
+import { Tracks } from './tracks/tracks.js';
 
 Meteor.methods({
   'createGame'() {
     // Games.insert({ user_id: this.userId });
-    return traks = Tracks.aggregate([ { $sample: { size: 4 } } ]);
+    return Tracks.aggregate([ { $sample: { size: 4 } } ]);
+  },
+  'getPlaylists'() {
+    // Games.insert({ user_id: this.userId });
+    return Playlists.find().fetch();
   },
 });
