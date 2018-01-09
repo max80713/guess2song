@@ -10,7 +10,8 @@
     "babel-runtime": "^6.26.0",
     "bcrypt": "^1.0.3",
     "meteor-node-stubs": "^0.3.2",
-    "moment": "^2.20.1"
+    "moment": "^2.20.1",
+    "random-js": "^1.0.8"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.1"
