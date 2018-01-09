@@ -7,6 +7,7 @@ body {
   width: 100vw;
   height: 100vh;
   position: relative;
+  background: url('/img/pexels-photo-314726.jpeg') no-repeat fixed center;
   
   .hello {
     position: absolute;
@@ -18,53 +19,31 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
+    display: grid;
+    grid-template-rows: 1fr 2fr 4fr;
+
+    .track {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+
+      .option {
+        background-color: darkcyan;
+        color: white;
+        line-height: 1.6em;
+        padding: 0.4em;
+        width: 80%;
+        font-size: 1.6em;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        border-radius: 4px;
+      }
+    }
   }
-  // &::after {
-  //   content: "";
-  //   top: 0;
-  //   left: 0;
-  //   bottom: 0;
-  //   right: 0;
-  //   opacity: 0.3;
-  //   position: absolute;
-  //   background: url(/img/pexels-photo-314726.jpeg) center/cover no-repeat fixed; 
-  //   z-index: -1;
-  // }
 }
-
-// .hello {
-//   width: 50%;
-//   height: 50%;
-//   display: flex;
-//   align-items: center;
-//   justify-content: space-between;
-//   flex-direction: column;
-
-//   .track {
-//     -webkit-filter: blur(5px);
-//     -moz-filter: blur(5px);
-//     -o-filter: blur(5px);
-//     -ms-filter: blur(5px);
-//     filter: blur(5px);
-//     width: 50%;
-//     height: 50%;
-//     position: relative;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-
-//     iframe {
-//       position: absolute;
-//     }
-
-//     .mask {
-//       position: absolute;
-//       width: 100%;
-//       height: 100%;
-//     }
-//   }
-//   .buttons {
-//     width: 100%;
-//   }
-// }
-
