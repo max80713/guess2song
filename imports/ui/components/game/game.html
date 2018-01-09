@@ -1,10 +1,13 @@
 <template name="game">
   <div class="game">
-    <div></div>
+    <div class="info">
+      <div class="time">{{time}}</div>
+      <div class="score">{{score}}</div>
+    </div>
     <div class="track"></div>
     <div class="options">
       {{#each options}}
-      <button>{{name}}</button>
+      <div class="option">{{name}}</div>
       {{/each}}
     </div>
   </div>

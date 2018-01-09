@@ -4,6 +4,8 @@ import Random from 'random-js';
 Template.game.onCreated(function gameOnCreated() {
   this.tracks = new ReactiveVar();
   this.options = new ReactiveVar();
+  this.time = new ReactiveVar(60);
+  this.score = new ReactiveVar();
   this.random = new Random();
   const playlistId = FlowRouter.getParam('playlistId');
   Meteor.call('getTracks', playlistId, (error, result) => {
@@ -35,4 +37,7 @@ Template.game.helpers({
   options() {
     return Template.instance().options.get();
   },
+  name() {
+    return this.name.replace(/\(.*\)/g, '');
+  }
 });
