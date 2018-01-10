@@ -41,7 +41,7 @@ Meteor.startup(() => {
   let first = true;
   async.forever((next) => {
     Meteor.setTimeout(next, moment().endOf('day') - moment());
-    if (first && Playlists.find().count() > 0) {
+    if (first && Playlists.find().count() > 0 && Tracks.find().count() > 0) {
       first = false;
       return;
     };
