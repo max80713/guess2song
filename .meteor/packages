@@ -23,11 +23,11 @@ less                    # Leaner CSS language
 
 practicalmeteor:mocha             # A package for writing and running your meteor app and package tests with mocha
 johanbrook:publication-collector  # Test a Meteor publication by collecting its output
-accounts-ui
 accounts-password
 aldeed:simple-schema
 aldeed:collection2
 meteorhacks:aggregate
 semantic:ui
 juliancwirko:postcss
+accounts-ui
 accounts-facebook

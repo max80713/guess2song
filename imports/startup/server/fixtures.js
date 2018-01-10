@@ -45,12 +45,14 @@ Meteor.startup(() => {
       first = false;
       return;
     };
+    const token = Tokens.findOne();
     console.log(new Date(), 'updating playlists & tracks...');
-    const accessToken = Tokens.findOne().access_token;
-    const api = new Api(accessToken);
+    if (!token) return;
+    const api = new Api(token.access_token);
     api.chartFetcher.fetchCharts().then((response) => {
       const playlists = response.data.data;
       Playlists.remove({});
+      Tracks.remove({});
       async.each(playlists, (playlist, callback) => Playlists.insert(playlist, callback), (error) => {
         if (error) {
           next(error);
@@ -58,10 +60,11 @@ Meteor.startup(() => {
         }
         async.each(playlists, (playlist, callback) => {
           api.chartFetcher.setPlaylistID(playlist.id).fetchTracks().then((response) => {
-            Tracks.remove({});  
             const tracks = response.data.data;
-            tracks.playlist_id = playlist.id;
-            async.each(tracks, (track, callback) => Tracks.insert(track, callback), (error) => {
+            async.each(tracks, (track, callback) => {
+              track.playlist_id = playlist.id;
+              Tracks.insert(track, callback);
+            }, (error) => {
               if (error) {
                 next(error);
                 return;
