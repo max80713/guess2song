@@ -18,10 +18,11 @@ Template.game.onRendered(function gameOnRendered() {
     const tracks = this.tracks.get();
     if (!tracks) return;
 
-    const options = this.random.sample(tracks, 4);
+    const options = this.random.sample(tracks, 8);
     this.options.set(options);
 
     const track = this.random.pick(options);
+    console.log(track);
     this.trackId = track.id;
 
     let iframe;
