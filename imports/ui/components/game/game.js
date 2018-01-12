@@ -112,6 +112,7 @@ Template.game.helpers({
   userName() {
     const user = Meteor.user();
     if (!user) return '';
+    console.log(user);
     return user.services.facebook.name;
   },
   name() {
