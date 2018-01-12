@@ -74,6 +74,9 @@ Template.game.helpers({
   options() {
     return Template.instance().options.get();
   },
+  pictureUrl() {
+    return Template.instance().pictureUrl.get();
+  },
   name() {
     return this.name.replace(/\(.*\)/g, '');
   },
