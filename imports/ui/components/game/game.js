@@ -3,6 +3,7 @@ import Random from 'random-js';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 Template.game.onCreated(function gameOnCreated() {
+  this.animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
   this.rights = new ReactiveVar();
   this.wrongs = new ReactiveVar();
   this.tracks = new ReactiveVar();
@@ -27,7 +28,7 @@ Template.game.onRendered(function gameOnRendered() {
   this.$('.modal').modal({
     dismissible: false,
     ready: () => {
-      this.$('.results').addClass('animated jello').one(animationEnd, () => {
+      this.$('.results').addClass('animated jello').one(this.animationEnd, () => {
         this.$(event.currentTarget).removeClass('animated jello');
       });
     },
@@ -62,15 +63,20 @@ Template.game.onRendered(function gameOnRendered() {
 
 Template.game.events({
   'click li.option'(event, instance) {
-    const animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
     if (this.id === instance.track.get().id) {
-      instance.$(event.currentTarget).removeClass('white').addClass('animated tada green lighten-4').one(animationEnd, () => {
-        instance.rights.set(instance.rights.get() + 1);
-      });
+      instance.$(event.currentTarget)
+        .removeClass('white')
+        .addClass('animated tada green lighten-4')
+        .one(instance.animationEnd, () => {
+          instance.rights.set(instance.rights.get() + 1);
+        });
     } else {
-      instance.$(event.currentTarget).removeClass('white').addClass('animated shake red lighten-4').one(animationEnd, () => {
-        instance.wrongs.set(instance.wrongs.get() + 1);
-      });
+      instance.$(event.currentTarget)
+        .removeClass('white')
+        .addClass('animated shake red lighten-4')
+        .one(instance.animationEnd, () => {
+          instance.wrongs.set(instance.wrongs.get() + 1);
+        });
     }
   },
   'click .fixed-action-btn'(event, instance) {
@@ -113,7 +119,7 @@ Template.game.helpers({
     const user = Meteor.user();
     if (!user) return '';
     console.log(user);
-    return user.services.facebook.name;
+    return user.profile.name;
   },
   name() {
     return this.name.replace(/\(.*\)/g, '');
