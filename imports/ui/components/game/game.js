@@ -59,8 +59,6 @@ Template.game.onRendered(function gameOnRendered() {
       Meteor.clearInterval(this.timer);
       const playlistId = FlowRouter.getParam('playlistId');
       Meteor.call('updateChampion', playlistId, score, (error, result) => {
-        console.log(error);
-        console.log(result);
         this.$('.modal').modal('open');
       });
     }
@@ -124,7 +122,6 @@ Template.game.helpers({
   userName() {
     const user = Meteor.user();
     if (!user) return '';
-    console.log(user);
     return user.profile.name;
   },
   name() {
