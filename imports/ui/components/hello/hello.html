@@ -1,21 +1,15 @@
 <template name="hello">
   <div class="hello">
     {{> loginButtons}}
-    <div class="ui stackable doubling four column grid">
+    <div class="row">
       {{#each playlists}}
-      <div class="column">
-        <div class="ui fluid card">
-          <div class="image">
+      <div class="col s12 m6 l4 xl3">
+        <div class="card">
+          <div class="card-image">
             <img src="{{images.[0].url}}">
           </div>
-          <div class="content">
-            <div class="header">{{title}}</div>
-            <div class="meta"></div>
-            <div class="description">{{description}}</div>
-          </div>
-          <div class="extra content">
-            <span class="right floated"></span>
-            <span></span>
+          <div class="card-content">
+            <p>{{title}}</p>
           </div>
         </div>
       </div>
