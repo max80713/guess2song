@@ -110,7 +110,7 @@ Template.game.helpers({
     return Template.instance().pictureUrl.get();
   },
   userName() {
-    const user = Metero.user();
+    const user = Meteor.user();
     if (!user) return '';
     return user.services.facebook.name;
   },
