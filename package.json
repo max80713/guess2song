@@ -6,9 +6,11 @@
   },
   "dependencies": {
     "@kkbox/kkbox-js-sdk": "^1.2.1",
+    "animate.css": "^3.5.2",
     "async": "^2.6.0",
     "babel-runtime": "^6.26.0",
     "bcrypt": "^1.0.3",
+    "fb": "^2.0.0",
     "meteor-node-stubs": "^0.3.2",
     "moment": "^2.20.1",
     "random-js": "^1.0.8"

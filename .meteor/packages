@@ -27,8 +27,9 @@ accounts-password
 aldeed:simple-schema
 aldeed:collection2
 meteorhacks:aggregate
-semantic:ui
 juliancwirko:postcss
 accounts-ui
 accounts-facebook
 facebook-config-ui
+fourseven:scss
+materialize:materialize
