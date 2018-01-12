@@ -14,7 +14,7 @@ Template.hello.helpers({
 });
 
 Template.hello.events({
-  'click .ui.card'() {
+  'click .card'() {
     FlowRouter.go(`/${this.id}`);
   },
 });
