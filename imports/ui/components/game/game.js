@@ -55,8 +55,14 @@ Template.game.onRendered(function gameOnRendered() {
         this.time.set(this.time.get() - 1);
       }, 1000);
     } else if (time === 0) {
+      const score = this.rights.get() - this.wrongs.get();
       Meteor.clearInterval(this.timer);
-      this.$('.modal').modal('open');
+      const playlistId = FlowRouter.getParam('playlistId');
+      Meteor.call('updateChampion', playlistId, score, (error, result) => {
+        console.log(error);
+        console.log(result);
+        this.$('.modal').modal('open');
+      });
     }
   });
 });
