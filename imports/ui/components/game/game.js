@@ -90,12 +90,12 @@ Template.game.events({
     FlowRouter.go('/');
   },
   'click .again'(event, instance) {
+    instance.time.set(60);
     instance.rights.set();
     instance.wrongs.set();
     Meteor.defer(() => {
       instance.rights.set(0);
       instance.wrongs.set(0);
-      instance.time.set(60);
     });
   },
 });
