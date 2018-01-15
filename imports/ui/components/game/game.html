@@ -1,7 +1,7 @@
 <template name="game">
   <div class="game">
     <div class="info">
-      <div class="time"><h1>{{time}}</h1></div>
+      <!-- <div class="time"><h1>{{time}}</h1></div> -->
       <div class="avatar">
         {{#if pictureUrl}}
         <img src="{{pictureUrl}}">
@@ -9,10 +9,30 @@
         <i class="large material-icons">person</i>
         {{/if}}
       </div>
-      <div class="score"><h1>{{rights}} / {{wrongs}}</h1></div>
+      <!-- <div class="score"><h1>{{rights}} / {{wrongs}}</h1></div> -->
     </div>
-    <div class="row track" style="background:url({{trackCover}}) center/cover no-repeat fixed ">
-      <iframe src="{{trackSrc}}"></iframe>
+    <div class="row track">
+      <div class="music" style="background:url({{trackCover}}) center/cover no-repeat fixed ">
+        <iframe src="{{trackSrc}}"></iframe>
+      </div>
+      <div class="timer">
+        <canvas id="days-canvas"></canvas>
+        <span id="days-count"></span>
+        
+        <canvas id="hours-canvas"></canvas>
+        <span id="hours-count"></span>
+        
+        <canvas id="minutes-canvas"></canvas>
+        <span id="minutes-count"></span>
+        
+        <canvas id="seconds-canvas"></canvas>
+        <span id="seconds-count"></span>
+      </div>
+      <div class="time">
+        <h2 class="center-align right">答對：{{rights}}</h2>
+        <h2 class="center-align second">{{time}}</h2>
+        <h2 class="center-align wrong">答錯：{{wrongs}}</h2>
+      </div>
     </div>
     <ul class="row options">
     {{#each options}}
@@ -23,7 +43,7 @@
     </ul>
     <div class="fixed-action-btn">
       <a class="btn-floating btn-large red">
-        <i class="large material-icons">library_music</i>
+        <i class="large material-icons">help</i>
       </a>
       <!-- <ul>
         <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>

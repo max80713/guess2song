@@ -1,6 +1,8 @@
 import './game.html';
 import Random from 'random-js';
 import { ReactiveVar } from 'meteor/reactive-var';
+import ClockTimer from '../../../../client/lib/clock-timer.js';
+
 
 Template.game.onCreated(function gameOnCreated() {
   this.animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
@@ -25,6 +27,17 @@ Template.game.onCreated(function gameOnCreated() {
 });
 
 Template.game.onRendered(function gameOnRendered() {
+  const startDate = new Date();
+  const endDate = new Date(startDate.getTime() + 60000);
+  const startDateString = `${startDate.getUTCMonth()}/${startDate.getUTCDate()}/${startDate.getUTCFullYear()} ${startDate.getUTCHours()}:${startDate.getUTCMinutes()}:${startDate.getUTCSeconds()}`;
+  const endDateString = `${endDate.getUTCMonth() + 1}/${endDate.getUTCDate()}/${endDate.getUTCFullYear()} ${endDate.getUTCHours()}:${endDate.getUTCMinutes()}:${endDate.getUTCSeconds()}`;
+  console.log(startDateString);
+  console.log(endDateString);
+  const clock = new ClockTimer({
+    // startDate: startDateString,
+    endDate: endDateString, 
+    secondsStrokeStyle: "#FCB937",
+  });
   this.$('.modal').modal({
     dismissible: false,
     ready: () => {
