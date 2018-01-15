@@ -8,4 +8,7 @@ Template.App_body.events({
   'click a.help'(event, instance) {
     instance.$('.modal.help').modal('open');
   },
+  'click a.exit'() {
+    FlowRouter.go('/');
+  },
 })

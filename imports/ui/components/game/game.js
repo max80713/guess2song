@@ -92,10 +92,10 @@ Template.game.events({
         });
     }
   },
-  'click .fixed-action-btn'(event, instance) {
+  'click .fixed-action-btn'() {
     FlowRouter.go('/');
   },
-  'click .back'(event, instance) {
+  'click .back'() {
     FlowRouter.go('/');
   },
   'click .again'(event, instance) {
