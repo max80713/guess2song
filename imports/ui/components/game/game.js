@@ -85,18 +85,18 @@ Template.game.onRendered(function gameOnRendered() {
 Template.game.events({
   'click li.option'(event, instance) {
     if (this.id === instance.track.get().id) {
-      instance.$(event.currentTarget)
-        .removeClass('white')
-        .addClass('animated tada green lighten-4')
+      instance.rights.set(instance.rights.get() + 1);
+      instance.$('.right')
+        .addClass('animated tada')
         .one(instance.animationEnd, () => {
-          instance.rights.set(instance.rights.get() + 1);
+          instance.$('.right').removeClass('animated tada');
         });
     } else {
-      instance.$(event.currentTarget)
-        .removeClass('white')
-        .addClass('animated shake red lighten-4')
+      instance.wrongs.set(instance.wrongs.get() + 1);
+      instance.$('.wrong')
+        .addClass('animated tada')
         .one(instance.animationEnd, () => {
-          instance.wrongs.set(instance.wrongs.get() + 1);
+          instance.$('.wrong').removeClass('animated tada');
         });
     }
   },
