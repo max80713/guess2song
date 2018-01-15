@@ -58,9 +58,6 @@ Template.game.onRendered(function gameOnRendered() {
     const tracks = this.tracks;
     const options = this.random.sample(tracks, 4);
     this.options.set(options);
-    Meteor.defer(() => {
-      Materialize.showStaggeredList('.options');
-    });
 
     const track = this.random.pick(options);
     this.track.set(track);
