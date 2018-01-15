@@ -127,6 +127,9 @@ Template.game.helpers({
   options() {
     return Template.instance().options.get();
   },
+  index(index) {
+    return index + 1;
+  },
   pictureUrl() {
     return Template.instance().pictureUrl.get();
   },
