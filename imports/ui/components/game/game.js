@@ -34,7 +34,7 @@ Template.game.onRendered(function gameOnRendered() {
     endDate: endDateString, 
     secondsStrokeStyle: "#FCB937",
   });
-  this.$('.modal').modal({
+  this.$('.result').modal({
     dismissible: false,
     ready: () => {
       this.$('.results').addClass('animated jello').one(this.animationEnd, () => {
@@ -68,7 +68,7 @@ Template.game.onRendered(function gameOnRendered() {
       Meteor.clearInterval(this.timer);
       const playlistId = FlowRouter.getParam('playlistId');
       Meteor.call('updateChampion', playlistId, score, (error, result) => {
-        this.$('.modal').modal('open');
+        this.$('.result').modal('open');
       });
     }
   });
