@@ -3,9 +3,28 @@
   src: url(/font/SentyCreamPuff.ttf);
 }
 
+@font-face {
+  font-family: SkyScrappers;
+  src: url(/font/SkyScrappers-Regular.otf);
+}
+
 body {
   .loader {
     height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .message {
+    font-family: SkyScrappers;
+    -webkit-text-stroke: 1px #6d6d6d; 
+    text-stroke: 1px #6d6d6d;
+    font-size: 8em;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -47,7 +66,6 @@ body {
       display: flex;
       align-items: center;
       justify-content: center;
-      // grid-template-columns: repeat(3, 1fr);
 
       .time {
         display: flex;
@@ -108,10 +126,13 @@ body {
         align-items: center;
         .right {
           color: rgb(0, 162, 255);
+          -webkit-text-stroke: 1px #6d6d6d; 
+          text-stroke: 1px #6d6d6d;
         }
         .wrong {
           color: rgb(255, 0, 0);
-          
+          -webkit-text-stroke: 1px #6d6d6d; 
+          text-stroke: 1px #6d6d6d;
         }
         .second {
           color: #FCB937;

@@ -1,4 +1,5 @@
 import './game.html';
+import '../message/message.js';
 import Random from 'random-js';
 import { ReactiveVar } from 'meteor/reactive-var';
 import ClockTimer from '../../../../client/lib/clock-timer.js';
@@ -14,12 +15,26 @@ Template.game.onCreated(function gameOnCreated() {
   this.options = new ReactiveVar();
   this.time = new ReactiveVar();
   this.random = new Random();
+  this.init = () => {
+    this.time.set(60);
+    this.rights.set();
+    this.wrongs.set();
+    Meteor.defer(() => {
+      this.rights.set(0);
+      this.wrongs.set(0);
+    });
+    const startDate = new Date();
+    const endDate = new Date(startDate.getTime() + 60000);
+    const endDateString = `${endDate.getUTCMonth() + 1}/${endDate.getUTCDate()}/${endDate.getUTCFullYear()} ${endDate.getUTCHours()}:${endDate.getUTCMinutes()}:${endDate.getUTCSeconds()}`;
+    const clock = new ClockTimer({
+      endDate: endDateString, 
+      secondsStrokeStyle: "#FCB937",
+    });
+  }
   const playlistId = FlowRouter.getParam('playlistId');
   Meteor.call('getTracks', playlistId, (error, result) => {
-    this.tracks = result;   
-    this.rights.set(0); 
-    this.wrongs.set(0); 
-    this.time.set(60);
+    this.tracks = result;
+    Blaze.renderWithData(Template.message, { init: this.init }, this.firstNode);
   }); 
   Meteor.call('getPictureUrl', (error, result) => {
     this.pictureUrl.set(result);
@@ -27,13 +42,6 @@ Template.game.onCreated(function gameOnCreated() {
 });
 
 Template.game.onRendered(function gameOnRendered() {
-  const startDate = new Date();
-  const endDate = new Date(startDate.getTime() + 60000);
-  const endDateString = `${endDate.getUTCMonth() + 1}/${endDate.getUTCDate()}/${endDate.getUTCFullYear()} ${endDate.getUTCHours()}:${endDate.getUTCMinutes()}:${endDate.getUTCSeconds()}`;
-  const clock = new ClockTimer({
-    endDate: endDateString, 
-    secondsStrokeStyle: "#FCB937",
-  });
   this.$('.result').modal({
     dismissible: false,
     ready: () => {
@@ -99,13 +107,7 @@ Template.game.events({
     FlowRouter.go('/');
   },
   'click .again'(event, instance) {
-    instance.time.set(60);
-    instance.rights.set();
-    instance.wrongs.set();
-    Meteor.defer(() => {
-      instance.rights.set(0);
-      instance.wrongs.set(0);
-    });
+    Blaze.renderWithData(Template.message, { init: instance.init }, instance.firstNode);
   },
 });
 
