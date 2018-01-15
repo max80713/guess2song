@@ -379,7 +379,6 @@
             }
 
             this.textValue = _this.settings.seconds;
-            console.log(this.textValue);
 
             if ( _this.settings.modeClock === true ) {
                 this.textValue = _this.settings.seconds;

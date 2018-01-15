@@ -29,12 +29,8 @@ Template.game.onCreated(function gameOnCreated() {
 Template.game.onRendered(function gameOnRendered() {
   const startDate = new Date();
   const endDate = new Date(startDate.getTime() + 60000);
-  const startDateString = `${startDate.getUTCMonth()}/${startDate.getUTCDate()}/${startDate.getUTCFullYear()} ${startDate.getUTCHours()}:${startDate.getUTCMinutes()}:${startDate.getUTCSeconds()}`;
   const endDateString = `${endDate.getUTCMonth() + 1}/${endDate.getUTCDate()}/${endDate.getUTCFullYear()} ${endDate.getUTCHours()}:${endDate.getUTCMinutes()}:${endDate.getUTCSeconds()}`;
-  console.log(startDateString);
-  console.log(endDateString);
   const clock = new ClockTimer({
-    // startDate: startDateString,
     endDate: endDateString, 
     secondsStrokeStyle: "#FCB937",
   });
