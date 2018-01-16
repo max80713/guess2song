@@ -11,7 +11,16 @@ import { Tracks } from './tracks/tracks.js';
 
 const fetchCharts = (api) => new Promise(resolve => api.chartFetcher.fetchCharts().then(response => resolve(response.data.data)));
 const fetchTracks = (api, playlistId) => new Promise(resolve => api.chartFetcher.setPlaylistID(playlistId).fetchTracks().then(response => resolve(response.data.data)));
-
+const fetchFbPicture = (accessToken) => new Promise((resolve, reject) => {
+  FB.setAccessToken(accessToken);
+  FB.api('/me?fields=picture', 'get', (res) => {
+    if(!res || res.error) {
+      reject(!res ? 'error occurred' : res.error);
+      return;
+    }
+    resolve(res.picture.data.url);
+  });
+});
 // playlists.forEach((playlist) => {
 //   if (!playlist.champion_id) return;
 //   const champion = Meteor.users.findOne(playlist.champion_id);
@@ -36,7 +45,16 @@ Meteor.methods({
     const token = Tokens.findOne();
     const api = new Api(token.access_token);
     const playlists = Promise.await(fetchCharts(api));
-    return playlists;
+    return playlists.map((playlist) => {
+      const playlistDocument = Playlists.findOne({ id: playlist.id });
+      if (!playlistDocument.champion_id) return;
+      const champion = Meteor.users.findOne(playlistDocument.champion_id);
+      if (!champion) return;
+      playlistDocument.champion_name = champion.profile.name;
+      const fbAccessToken = champion.services.facebook.accessToken;
+      playlistDocument.champion_picture = Promise.await(fetchFbPicture(fbAccessToken));
+      return playlistDocument;
+    });
   },
   'getTracks'(playlistId) {
     const token = Tokens.findOne();
@@ -48,17 +66,7 @@ Meteor.methods({
     const user = Meteor.user();
     if (!user) return '';
     const fbAccessToken = user.services.facebook.accessToken;
-    FB.setAccessToken(fbAccessToken);
-    const fbAPI = () => new Promise((resolve, reject) => {
-      FB.api('/me?fields=picture', 'get', (res) => {
-        if(!res || res.error) {
-          reject(!res ? 'error occurred' : res.error);
-          return;
-        }
-        resolve(res.picture.data.url);
-      });
-    });
-    return Promise.await(fbAPI());
+    return Promise.await(fetchFbPicture(fbAccessToken));
   },
   'updateChampion'(playlistId, score) {
     if (!this.userId) return;
