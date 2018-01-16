@@ -50,6 +50,7 @@ Meteor.methods({
       if (!playlistDocument.champion_id) return;
       const champion = Meteor.users.findOne(playlistDocument.champion_id);
       if (!champion) return;
+      playlist.champion_score = playlistDocument.champion_score;
       playlist.champion_name = champion.profile.name;
       const fbAccessToken = champion.services.facebook.accessToken;
       playlist.champion_picture = Promise.await(fetchFbPicture(fbAccessToken));
