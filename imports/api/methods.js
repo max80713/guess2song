@@ -45,16 +45,16 @@ Meteor.methods({
     const token = Tokens.findOne();
     const api = new Api(token.access_token);
     const playlists = Promise.await(fetchCharts(api));
-    return playlists.map((playlist) => {
+    playlists.forEach((playlist) => {
       const playlistDocument = Playlists.findOne({ id: playlist.id });
       if (!playlistDocument.champion_id) return;
       const champion = Meteor.users.findOne(playlistDocument.champion_id);
       if (!champion) return;
-      playlistDocument.champion_name = champion.profile.name;
+      playlist.champion_name = champion.profile.name;
       const fbAccessToken = champion.services.facebook.accessToken;
-      playlistDocument.champion_picture = Promise.await(fetchFbPicture(fbAccessToken));
-      return playlistDocument;
+      playlist.champion_picture = Promise.await(fetchFbPicture(fbAccessToken));
     });
+    return playlists;
   },
   'getTracks'(playlistId) {
     const token = Tokens.findOne();
