@@ -29,6 +29,7 @@ Meteor.methods({
     const playlists = Promise.await(fetchCharts(api));
     playlists.forEach((playlist) => {
       const playlistDocument = Playlists.findOne({ id: playlist.id });
+      if (!playlistDocument) return;
       if (!playlistDocument.champion_id) return;
       const champion = Meteor.users.findOne(playlistDocument.champion_id);
       if (!champion) return;

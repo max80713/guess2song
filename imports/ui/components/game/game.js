@@ -1,9 +1,9 @@
-import './game.html';
-import '../message/message.js';
-import Random from 'random-js';
 import { ReactiveVar } from 'meteor/reactive-var';
+import Random from 'random-js';
 import ClockTimer from '../../../../client/lib/clock-timer.js';
 
+import './game.html';
+import '../message/message.js';
 
 Template.game.onCreated(function gameOnCreated() {
   this.animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
