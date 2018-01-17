@@ -21,24 +21,6 @@ const fetchFbPicture = (accessToken) => new Promise((resolve, reject) => {
     resolve(res.picture.data.url);
   });
 });
-// playlists.forEach((playlist) => {
-//   if (!playlist.champion_id) return;
-//   const champion = Meteor.users.findOne(playlist.champion_id);
-//   if (!champion) return;
-//   playlist.champion_name = champion.profile.name;
-//   const fbAccessToken = champion.services.facebook.accessToken;
-//   FB.setAccessToken(fbAccessToken);
-//   const fbAPI = () => new Promise((resolve, reject) => {
-//     FB.api('/me?fields=picture', 'get', (res) => {
-//       if(!res || res.error) {
-//         reject(!res ? 'error occurred' : res.error);
-//         return;
-//       }
-//       resolve(res.picture.data.url);
-//     });
-//   });
-//   playlist.champion_picture = Promise.await(fbAPI())
-// });
 
 Meteor.methods({
   'getPlaylists'() {
