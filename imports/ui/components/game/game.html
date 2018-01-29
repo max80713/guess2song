@@ -1,7 +1,10 @@
 <template name="game">
   <div class="game">
+    <div class="kkbox">
+      音樂來源：<br />
+      <img src="/img/kkbox.png" alt="" />
+    </div>
     <div class="info">
-      <!-- <div class="time"><h1>{{time}}</h1></div> -->
       <div class="avatar">
         {{#if pictureUrl}}
         <img src="{{pictureUrl}}">
@@ -9,7 +12,6 @@
         <i class="large material-icons">person</i>
         {{/if}}
       </div>
-      <!-- <div class="score"><h1>{{rights}} / {{wrongs}}</h1></div> -->
     </div>
     <div class="row track">
       <div class="music" style="background:url({{trackCover}}) center/cover no-repeat fixed ">
