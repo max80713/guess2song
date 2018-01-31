@@ -18,9 +18,9 @@ FlowRouter.route('/', {
 
 FlowRouter.route('/playlists', {
   name: 'App.home',
-  // triggersEnter: [(context, redirect) => {
-  //   if (!Meteor.user()) redirect('/');
-  // }],
+  triggersEnter: [(context, redirect) => {
+    if (!Meteor.user()) redirect('/');
+  }],
   action() {
     BlazeLayout.render('App_body', { main: 'playlists' });
   },
@@ -28,9 +28,9 @@ FlowRouter.route('/playlists', {
 
 FlowRouter.route('/playlists/:playlistId', {
   name: 'App.home',
-  // triggersEnter: [(context, redirect) => {
-  //   if (!Meteor.user()) redirect('/');
-  // }],
+  triggersEnter: [(context, redirect) => {
+    if (!Meteor.user()) redirect('/');
+  }],
   action() {
     BlazeLayout.render('App_body', { main: 'game' });
   },
