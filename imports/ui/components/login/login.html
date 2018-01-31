@@ -13,11 +13,11 @@
         請使用電腦瀏覽器
       </div>
     {{else}}
-      {{#unless currentUser}}
+      {{#if currentUser}}
         <div class="button-start center-align">
           <a href="/playlists" class="blue darken-4 waves-effect waves-light btn-large">開始猜歌</a>
         </div>
-      {{/unless}}
+      {{/if}}
       <div class="button-login center-align">
         {{> loginButtons}}
       </div>
