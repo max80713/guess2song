@@ -4,42 +4,21 @@
       音樂來源：<br />
       <img src="/img/kkbox.png" alt="" />
     </div>
-    <div class="info">
-      <div class="avatar">
-        {{#if pictureUrl}}
-        <img src="{{pictureUrl}}">
-        {{else}}
-        <i class="large material-icons">person</i>
-        {{/if}}
+    <div class="music">
+      <iframe src="{{trackSrc}}"></iframe>
+    </div>
+    <div class="timer">
+      <div class="bar">
+        <div class="progress" style="width:{{width}}"></div>
       </div>
     </div>
-    <div class="row track">
-      <div class="music" style="background:url({{trackCover}}) center/cover no-repeat fixed ">
-        <iframe src="{{trackSrc}}"></iframe>
-      </div>
-      <div class="timer">
-        <canvas id="days-canvas"></canvas>
-        <span id="days-count"></span>
-        
-        <canvas id="hours-canvas"></canvas>
-        <span id="hours-count"></span>
-        
-        <canvas id="minutes-canvas"></canvas>
-        <span id="minutes-count"></span>
-        
-        <canvas id="seconds-canvas"></canvas>
-        <span id="seconds-count"></span>
-      </div>
-      <div class="time">
-        <h2 class="center-align right">答對：{{rights}}</h2>
-        <h2 class="center-align second">{{time}}</h2>
-        <h2 class="center-align wrong">答錯：{{wrongs}}</h2>
-      </div>
+    <div class="records">
+      <div class="stars"></div>
     </div>
-    <ul class="row options">
+    <ul class="options">
     {{#each options}}
-      <li class="col s12 m12 l6 xl6 btn-large white black-text hoverable option animated bounceIn">
-        <h5 class="truncate">{{index @index}}. {{name}}</h5>
+      <li class="blue darken-4 white-text hoverable animated zoomIn option">
+        {{name}}
       </li>
     {{/each}}
     </ul>
@@ -53,15 +32,15 @@
           {{/if}}
         </div>
         <div class="center-align results">
-          <h4>{{userName}}</h4>
-          <h4>答對: {{rights}}</h4>
-          <h4>答錯: {{wrongs}}</h4>
-          <h4>最後分數: {{score}}</h4>
+          <h5>{{userName}}</h5>
+          <h5><ul class="stars">{{#each corrects}}<li>{{> star correct=true}}</li>{{/each}}</ul></h5>
+          <h5><ul class="stars">{{#each wrongs}}<li>{{> star correct=false}}</li>{{/each}}</ul></h5>
+          <h5 class="animated infinite pulse">最後分數: {{score}}</h5>
         </div>
-      </div>
-      <div class="modal-footer">
-        <a class="modal-action modal-close waves-effect waves-green btn back">回主選單</a>
-        <a class="modal-action modal-close waves-effect waves-green btn again">再挑戰一次</a>
+        <div class="center-align">
+            <a class="modal-action modal-close waves-effect waves-green btn back">回主選單</a>
+            <a class="modal-action modal-close waves-effect waves-green btn again">再挑戰一次</a>
+          </div>
       </div>
     </div>
   </div>

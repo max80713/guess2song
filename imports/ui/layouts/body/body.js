@@ -1,4 +1,5 @@
 import './body.html';
+import { Template } from 'meteor/templating';
 
 Template.App_body.onRendered(function bodyOnRendered() {
   this.$('.modal.help').modal();

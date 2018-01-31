@@ -1,0 +1,26 @@
+<template name="login">
+  <div class="login">
+    <div></div>
+    <div class="title">
+      <div></div>
+      <div class="text red-text center-align">猜</div>
+      <div class="text blue-text center-align">猜</div>
+      <div class="text green-text center-align">歌</div>
+      <div></div>
+    </div>
+    {{#if isMobile}}
+      <div class="warning center-align">
+        請使用電腦瀏覽器
+      </div>
+    {{else}}
+      {{#unless currentUser}}
+        <div class="button-start center-align">
+          <a href="/playlists" class="blue darken-4 waves-effect waves-light btn-large">開始猜歌</a>
+        </div>
+      {{/unless}}
+      <div class="button-login center-align">
+        {{> loginButtons}}
+      </div>
+    {{/if}}
+  </div>
+</template>
