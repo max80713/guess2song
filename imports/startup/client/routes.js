@@ -26,7 +26,7 @@ FlowRouter.route('/playlists', {
   },
 });
 
-FlowRouter.route('/playlists/:playlistId', {
+FlowRouter.route('/playlist', {
   name: 'App.home',
   triggersEnter: [(context, redirect) => {
     if (!Meteor.user()) redirect('/');

@@ -19,7 +19,7 @@ Template.game.onCreated(function gameOnCreated() {
     this.time.set(30);
     this.records.set([]);
   };
-  const playlistId = FlowRouter.getParam('playlistId');
+  const playlistId = FlowRouter.getQueryParam('id');
   Meteor.call('getTracks', playlistId, (error, result) => {
     this.tracks = result;
     Blaze.renderWithData(Template.ready, { init: this.init }, this.firstNode);
@@ -53,8 +53,8 @@ Template.game.onRendered(function gameOnRendered() {
       const records = this.records.get();
       const score = records.filter(record => record).length - records.filter(record => !record).length;
       Meteor.clearInterval(this.timer);
-      const playlistId = FlowRouter.getParam('playlistId');
-      Meteor.call('updateChampion', playlistId, score, (error, result) => {
+      const playlistTitle = FlowRouter.getQueryParam('title');
+      Meteor.call('updateChampion', playlistTitle, score, (error, result) => {
         this.$('.result').modal('open');
       });
     }

@@ -50,12 +50,12 @@ Meteor.methods({
     const fbAccessToken = user.services.facebook.accessToken;
     return Promise.await(fetchFbPicture(fbAccessToken));
   },
-  'updateChampion'(playlistId, score) {
+  'updateChampion'(playlistTitle, score) {
     if (!this.userId) return;
-    const playlist = Playlists.findOne({ id: playlistId });
+    const playlist = Playlists.findOne({ title: playlistTitle });
     if (!playlist) return;
     if (!playlist.champion_score || score > playlist.champion_score) {
-      return Playlists.update({ id: playlistId}, { $set: { champion_id: this.userId, champion_score: score } });
+      return Playlists.update({ title: playlistTitle}, { $set: { champion_id: this.userId, champion_score: score } });
     }
     return;
   }

@@ -16,6 +16,6 @@ Template.playlists.helpers({
 
 Template.playlists.events({
   'click .card'() {
-    FlowRouter.go(`/playlists/${this.id}`);
+    FlowRouter.go(`/playlist?id=${this.id}&title=${this.title}`);
   },
 });
