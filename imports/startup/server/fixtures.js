@@ -17,22 +17,15 @@ Meteor.startup(() => {
     }).catch(reject);
   });
   forever((next) => {
-    const token = Tokens.findOne();
-    if (!token || new Date() > token.expires_at ) {
-      console.log(new Date(), 'updating token...');
-      getNewToken().then((newToken) => {
-        Tokens.upsert({}, newToken, (error, result) => {
-          if (error) {
-            next(error);
-            return;
-          }
-          Meteor.setTimeout(next, newToken.expires_in);
-        });
-      }).catch(next);
-    } else {
-      let delay = token.expires_at - new Date();
-      delay = delay > 2147483647 ? 2147483647 : delay;
-      Meteor.setTimeout(next, delay);
-    }
+    console.log(new Date(), 'updating token...');
+    getNewToken().then((newToken) => {
+      Tokens.upsert({}, newToken, (error, result) => {
+        if (error) {
+          next(error);
+          return;
+        }
+        Meteor.setTimeout(next, 2147483647);
+      });
+    }).catch(next);
   }, console.log);
 });
